@@ -25,7 +25,11 @@ else
 end
 
 %use std=c99 as this is needed for portaudio
-build_args = {build_args{:}, 'CFLAGS="\$CFLAGS\ -std=c99"'};
+if is_octave
+	setenv('CFLAGS',[mkoctfile('-p','CFLAGS') 'CFLAGS="\$CFLAGS\ -std=c99"']);
+else
+	build_args = {build_args{:}, 'CFLAGS="\$CFLAGS\ -std=c99"'};
+end
 
 %deal with specified options file
 if nargin > 9 && ~isempty(optionsfile) && ischar(optionsfile)
